@@ -1,0 +1,32 @@
+[
+  {
+    "id": "p-d-1",
+    "shopIds": ["s-100"],
+    "shop": "Chixia",
+    "tag": "Popular",
+    "product": "Hanfu",
+    "currentPrice": 1,
+    "oldPrice": 500,
+    "picture": "https://github.com/paintmr/pictures-for-treasure-store/blob/main/pd1-chixia-chuchu1.jpg?raw=true"
+  },
+  {
+    "id": "p-d-2",
+    "shopIds": ["s-101"],
+    "shop": "Tianfu",
+    "tag": "Popular",
+    "product": "Dim sum",
+    "currentPrice": 1,
+    "oldPrice": 88,
+    "picture": "https://github.com/paintmr/pictures-for-treasure-store/blob/main/pd2-shuxiangyuan-gaodian.jpg?raw=true"
+  },
+  {
+    "id": "p-d-3",
+    "shopIds": ["s-102"],
+    "shop": "Yequ",
+    "tag": "Popular",
+    "product": "Tea box",
+    "currentPrice": 1,
+    "oldPrice": 166,
+    "picture": "https://github.com/paintmr/pictures-for-treasure-store/blob/main/pd3-yequ-chaguan.jpg?raw=true"
+  }
+]
