@@ -1,5 +1,7 @@
 import { get } from "../../utils/request";
 import url from "../../utils/url";
+import { FETCH_DATA } from "./middleware/api";
+import { schema } from "./entities/products";
 
 export const types = {
   //获取猜你喜欢请求
@@ -11,7 +13,15 @@ export const types = {
 }
 
 export const actions = {
-  loadlikes: () => {
+  loadLikes: () => {
+    return (dispatch, getState) => {
+      const endpoint = url.getProductList(0, 10)
+      return dispatch(fetchLikes(endpoint))
+    }
+  }
+
+
+  loadLikes: () => {
     return (dispatch, getState) => {
       dispatch(fetchLikesRequest());
       return get(url.getProductList(0,10)).then(
@@ -25,6 +35,18 @@ export const actions = {
     }
   }
 }
+
+const fetchLikes = endpoint => ({
+  [FETCH_DATA]: {
+    types: [
+      type.FETCH_LIKES_REQUEST,
+      type.FETCH_LIKES_SUCCESS,
+      type.FETCH_LIKES_FAILURE
+    ],
+    endpoint,
+    schema
+  }
+})
 
 const fetchLikesRequest = () => ({
   type: types.FETCH_LIKES_REQUEST
