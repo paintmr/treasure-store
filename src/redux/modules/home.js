@@ -1,6 +1,6 @@
 import { get } from "../../utils/request";
 import url from "../../utils/url";
-import { FETCH_DATA } from "./middleware/api";
+import { FETCH_DATA } from "../middleware/api";
 import { schema } from "./entities/products";
 
 export const types = {
@@ -20,28 +20,14 @@ export const actions = {
     }
   }
 
-
-  loadLikes: () => {
-    return (dispatch, getState) => {
-      dispatch(fetchLikesRequest());
-      return get(url.getProductList(0,10)).then(
-        data => {
-          dispatch(fetchLikesSuccess(data));
-        },
-        error => {
-          dispatch(fetchLikesFailure(error));
-        }
-      )
-    }
-  }
 }
 
 const fetchLikes = endpoint => ({
   [FETCH_DATA]: {
     types: [
-      type.FETCH_LIKES_REQUEST,
-      type.FETCH_LIKES_SUCCESS,
-      type.FETCH_LIKES_FAILURE
+      types.FETCH_LIKES_REQUEST,
+      types.FETCH_LIKES_SUCCESS,
+      types.FETCH_LIKES_FAILURE
     ],
     endpoint,
     schema
@@ -64,11 +50,11 @@ const fetchLikesFailure = (error) => ({
 
 const reducer = (state = {}, action) => {
   switch (action.type) {
-    caes types.FETCH_LIKES_REQUEST:
+    case types.FETCH_LIKES_REQUEST:
     //todo
-    caes types.FETCH_LIKES_SUCCESS:
+    case types.FETCH_LIKES_SUCCESS:
     //todo
-    caes types.FETCH_LIKES_FAILURE:
+    case types.FETCH_LIKES_FAILURE:
     //todo
     default:
       return state;
