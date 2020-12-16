@@ -18,7 +18,7 @@
   height: 30px;
   width: 75px;
   font-size: 18px;
-  color: #f63;
+  color: #DE4747;
   font-weight: bold;
 }
 
@@ -76,19 +76,13 @@
 }
 
 .discount__itemCurrentPrice{
-  color: #f63;
-  text-decoration: none;
-  font-size: 20px;
-}
-
-.discount__itemCurrentPrice{
-  color: #f63;
+  color: #DE4747;
   text-decoration: none;
   font-size: 20px;
 }
 
 .discount__itemCurrentPrice::before {
-  content: '\A5';
+  content: '\24';
   font-size: 14px;
 }
 
@@ -99,6 +93,6 @@
 }
 
 .discount__itemOldPrice::before {
-  content: '\A5';
+  content: '\24';
   font-size: 14px;
 }

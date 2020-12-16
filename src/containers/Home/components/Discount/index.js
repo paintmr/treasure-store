@@ -20,7 +20,7 @@ const dataSource =
       "tag": "Popular",
       "product": "Dim sum",
       "currentPrice": 1,
-      "oldPrice": 88,
+      "oldPrice": 36,
       "picture": "https://github.com/paintmr/pictures-for-treasure-store/blob/main/pd2-shuxiangyuan-gaodian.jpg?raw=true"
     },
     {
@@ -54,7 +54,7 @@ class Discount extends Component {
                   <div className='discount__itemPic'>
                     <img wicth='100%' height='100%' src={item.picture} />
                   </div>
-                  <div className='discount__itemTitle'>{item.shop}</div>
+                  <div className='discount__itemTitle'>{item.product}</div>
                   <div className='discount__tiemPriceWrapper'>
                     <ins className='discount__itemCurrentPrice'>{item.currentPrice}</ins>
                     <del className='discount__itemOldPrice'>{item.oldPrice}</del>
