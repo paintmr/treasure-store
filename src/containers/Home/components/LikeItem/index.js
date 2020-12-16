@@ -18,7 +18,9 @@ class LikeItem extends Component {
               <ins className='likeItem__currentPrice'>{currentPrice}</ins>
               <del className='likeItem__oldPrice'>{oldPrice}</del>
             </div>
-            <div className='likeItem__sale'>{saleDesc}</div>
+            <div className='likeItem__saleContainer'>
+              <div className='likeItem__sale'>{saleDesc}</div>
+            </div>
           </div>
         </div>
         
