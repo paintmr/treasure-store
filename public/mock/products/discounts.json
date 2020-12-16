@@ -1,7 +1,9 @@
 [
   {
     "id": "p-d-1",
-    "shopIds": ["s-100"],
+    "shopIds": [
+      "s-100"
+    ],
     "shop": "Chixia",
     "tag": "Popular",
     "product": "Hanfu",
@@ -11,7 +13,9 @@
   },
   {
     "id": "p-d-2",
-    "shopIds": ["s-101"],
+    "shopIds": [
+      "s-101"
+    ],
     "shop": "Tianfu",
     "tag": "Popular",
     "product": "Dim sum",
@@ -21,7 +25,9 @@
   },
   {
     "id": "p-d-3",
-    "shopIds": ["s-102"],
+    "shopIds": [
+      "s-102"
+    ],
     "shop": "Yequ",
     "tag": "Popular",
     "product": "Tea box",
