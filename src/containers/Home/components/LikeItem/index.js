@@ -5,10 +5,10 @@ class LikeItem extends Component {
   render() {
     const { shop, tag, picture, product, currentPrice, oldPrice, saleDesc } = this.props.data;
     return (
-      <a className='LikeItem'>
+      <a className='LikeItem' href='/'>
         <div className='likeItem__picContainer'>
           <div className='likeItem__picTag'>{tag}</div>
-          <img className='likeItem__pic' src={picture}/>
+          <img className='likeItem__pic' src={picture} alt={product}/>
         </div>
         <div className='likeItem__content'>
           <div className='likeItem__shop'>{shop}</div>
