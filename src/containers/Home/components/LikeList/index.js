@@ -36,11 +36,21 @@ class LikeList extends Component {
   }
 
   componentDidMount() {
+    //当pageCount为0的时候，说明还没有加载过LikeList，这时候才去mock数据中请求LikeList的数据
+    if(this.props.pageCount === 0) {
     this.props.fetchData();
+    }
+
+    //第一次进入HomePage，然后进入Detail，然后从Detail回到HomePage后的判断。如果pageCount大于0但小于3，说明还有数据没加载完，还有监听的必要
+    if(this.props.pageCcount > 0 && this.props.pageCcount <3) {
+      document.addEventListener("scroll", this.handleScroll);
+      this.likeListCount = this.props.pageCcount;
+    }
   }
 
-  componentDidUpdate() {
-    if (this.props.pageCount === 1 ) {
+  componentDidUpdate() { 
+    //第一次进入页面，加载了1个LikeList后，开始监听
+    if(this.likeListCount === 1){
       document.addEventListener("scroll", this.handleScroll);
     }
   }

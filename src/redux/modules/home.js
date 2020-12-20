@@ -41,6 +41,10 @@ const initialState = {
 export const actions = {
   loadDiscounts: () => {//這裡已經是dispatch的action了（假設為actionA）
     return (dispatch, getState) => {//接下來又往actionA中傳入dispatch和getState，是為了讓actionA來dispatch調用新的action（假設為actionB）
+      const {ids} = getState().home.discounts;//redux缓存层：已经从mock数据中请求了数据过来放在了redux中，就没必要重新去mock数据中请求了
+      if (ids.length > 0) {
+        return null;
+      }
       const endpoint = url.getProductList(params.PATH_DISCOUNTS, 0, params.PAGE_SIZE_DISCOUNTS);
       return dispatch(fetchDiscounts(endpoint))  //（actionB是fetchDiscounts）
     }
