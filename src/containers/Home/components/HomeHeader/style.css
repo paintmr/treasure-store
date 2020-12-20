@@ -89,7 +89,7 @@
   overflow: hidden;
 }
 
-.homeHeader__portrait::before {
+.homeHeader__icon::before {
   border: 1px solid #fff;
   position: absolute;
   right: 6px;
@@ -101,7 +101,7 @@
   border-radius: 5px;
 }
 
-.homeHeader__portrait::after {
+.homeHeader__icon::after {
   border: 1px solid #fff;
   position: absolute;
   right: 2px;

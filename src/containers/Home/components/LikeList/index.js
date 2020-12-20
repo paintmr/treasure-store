@@ -56,9 +56,7 @@ class LikeList extends Component {
   }
 
   componentWillUnmount() {
-    if (!this.removeListener) {
-      document.removeEventListener("scroll", this.handleScroll);
-    }
+    document.removeEventListener("scroll", this.handleScroll);
   }
 
   // 处理屏幕滚动事件，实现加载更多的效果
