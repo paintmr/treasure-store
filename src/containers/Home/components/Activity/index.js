@@ -7,7 +7,7 @@ class Activity extends Component {
       <div className='activity'>
         <div className='activity__block'>
           <a className='activity__content activity__content--pink' href="https://h5.dianping.com/app/ziggurat/1005/index.html?activity_tlt=1005&infrom=mzone">
-            <div className='activity__title'>No more than $88</div>
+            <div className='activity__title'>Less than $88</div>
             <div className='activity__subTitle activity__subTitle--pink'>Coupons</div>
             <img 
             className='activity__pic' 

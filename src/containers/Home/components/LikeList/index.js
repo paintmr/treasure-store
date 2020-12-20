@@ -7,7 +7,7 @@ class LikeList extends Component {
   constructor(props) {
     super(props)
     this.myRef = React.createRef(); //获取dom节点
-    this.removeEventListener = false;
+    this.likeListCount = 1;
   }
 
   render() {
@@ -36,20 +36,18 @@ class LikeList extends Component {
   }
 
   componentDidMount() {
-    document.addEventListener('scroll', this.handleScroll)
     this.props.fetchData();
   }
 
   componentDidUpdate() {
-    if (this.props.pageCount >= 3 && !this.removeListener) {
-      document.removeEventListener("scroll", this.handleScroll);
-      this.removeEventListener = true;
+    if (this.props.pageCount === 1 ) {
+      document.addEventListener("scroll", this.handleScroll);
     }
   }
 
   componentWillUnmount() {
     if (!this.removeListener) {
-      document.removeEventListener('scroll', this.handleScroll)
+      document.removeEventListener("scroll", this.handleScroll);
     }
   }
 
@@ -61,6 +59,10 @@ class LikeList extends Component {
     const likeListHeight = this.myRef.current.offsetHeight;
     if (scrollTop >= likeListHeight + likeListTop - screenHeight) {
       this.props.fetchData();
+      this.likeListCount++;
+      if(this.likeListCount===3){
+        document.removeEventListener("scroll", this.handleScroll);
+      }
     }
   }
 }
