@@ -1,0 +1,59 @@
+{
+  "id": "p-d-1",
+  "shopIds": [
+    "s-10",
+    "s-11",
+    "s-12"
+  ],
+  "nearestShop": "s-10",
+  "shop": "Yequ",
+  "tag": "Popular",
+  "picture": "https://github.com/paintmr/pictures-for-treasure-store/blob/main/pd3-yequ-chaguan.jpg?raw=true",
+  "product": "Tea box",
+  "description": "Buy a tea box at $1. The tea box is worth $166 and now costs only $1",
+  "currentPrice": 1,
+  "oldPrice": 166,
+  "saleDesc": "already sold 2589",
+  "detail": {
+    "category": "Vessels",
+    "products": [
+      {
+        "name": "Tea box",
+        "quantity": "1 box",
+        "price": "$1"
+      }
+    ],
+    "remark": "special design"
+  },
+  "validityPeriod": "Oct 20, 2020 to Oct 19, 2020",
+  "purchaseNotes": [
+    {
+      "title": "Days excepted",
+      "content": "Using the coupon at weekends and holidays"
+    },
+    {
+      "title": "Coupon using time",
+      "content": "11:00-22:00"
+    },
+    {
+      "title": "Booking remind",
+      "content": "No need to book, but maybe a waiting list during busy times"
+    },
+    {
+      "title": "Rule",
+      "content": "Every coupon for two customers"
+    },
+    {
+      "title": "VIP room",
+      "content": "Available"
+    },
+    {
+      "title": "Painting",
+      "content": "Traditional Chinese painting"
+    },
+    {
+      "title": "Other services",
+      "content": "Special design"
+    }
+  ]
+}

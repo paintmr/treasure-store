@@ -1,0 +1,59 @@
+{
+  "id": "p-d-2",
+  "shopIds": [
+    "s-10",
+    "s-11",
+    "s-12"
+  ],
+  "nearestShop": "s-10",
+  "shop": "Tianfu",
+  "tag": "Popular",
+  "picture": "https://github.com/paintmr/pictures-for-treasure-store/blob/main/pd2-shuxiangyuan-gaodian.jpg?raw=true",
+  "product": "Dim sum",
+  "description": "Traditional Chinese Cantonese Dim sums",
+  "currentPrice": 1,
+  "oldPrice": 36,
+  "saleDesc": "already sold 13567",
+  "detail": {
+    "category": "Food",
+    "products": [
+      {
+        "name": "Dim sum",
+        "quantity": "1 box",
+        "price": "$1"
+      }
+    ],
+    "remark": "free drinks"
+  },
+  "validityPeriod": "Oct 20, 2020 to Oct 19, 2020",
+  "purchaseNotes": [
+    {
+      "title": "Days excepted",
+      "content": "Using the coupon at weekends and holidays"
+    },
+    {
+      "title": "Coupon using time",
+      "content": "11:00-22:00"
+    },
+    {
+      "title": "Booking remind",
+      "content": "No need to book, but maybe a waiting list during busy times"
+    },
+    {
+      "title": "Rule",
+      "content": "Every coupon for two customers"
+    },
+    {
+      "title": "VIP room",
+      "content": "Available"
+    },
+    {
+      "title": "Takeaway boxes",
+      "content": "Available"
+    },
+    {
+      "title": "Other services",
+      "content": "Free WIFI"
+    }
+  ]
+}

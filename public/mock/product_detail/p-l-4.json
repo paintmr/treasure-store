@@ -1,0 +1,59 @@
+{
+  "id": "p-l-4",
+  "shopIds": [
+    "s-10",
+    "s-11",
+    "s-12"
+  ],
+  "nearestShop": "s-10",
+  "shop": "Yuan Zhai",
+  "tag": "Popular",
+  "picture": "https://github.com/paintmr/pictures-for-treasure-store/blob/main/pl4.jpg?raw=true",
+  "product": "Hanfu bag pink",
+  "description": "Buy Hanfu bag at $13. The Hanfu bag is worth $23.5 and now costs only $13",
+  "currentPrice": 13,
+  "oldPrice": 23.5,
+  "saleDesc": "already sold 3538",
+  "detail": {
+    "category": "Clothing",
+    "products": [
+      {
+        "name": "Hanfu bag pink",
+        "quantity": "1 bag",
+        "price": "$23.5"
+      }
+    ],
+    "remark": "special design"
+  },
+  "validityPeriod": "Oct 20, 2020 to Oct 19, 2020",
+  "purchaseNotes": [
+    {
+      "title": "Days excepted",
+      "content": "Using the coupon at weekends and holidays"
+    },
+    {
+      "title": "Coupon using time",
+      "content": "11:00-22:00"
+    },
+    {
+      "title": "Booking remind",
+      "content": "No need to book, but maybe a waiting list during busy times"
+    },
+    {
+      "title": "Rule",
+      "content": "Every coupon for two customers"
+    },
+    {
+      "title": "VIP room",
+      "content": "Available"
+    },
+    {
+      "title": "Embroideries",
+      "content": "Suzhou embroideries"
+    },
+    {
+      "title": "Other services",
+      "content": "Dry cleaning"
+    }
+  ]
+}

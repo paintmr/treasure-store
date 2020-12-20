@@ -1,0 +1,59 @@
+{
+  "id": "p-l-6",
+  "shopIds": [
+    "s-10",
+    "s-11",
+    "s-12"
+  ],
+  "nearestShop": "s-10",
+  "shop": "Anran Travel",
+  "tag": "Popular",
+  "picture": "https://github.com/paintmr/pictures-for-treasure-store/blob/main/pl6.jpeg?raw=true",
+  "product": "One day trip to Nanjing",
+  "description": "Being indulged in Chinese history and landscape for a day",
+  "currentPrice": 67.5,
+  "oldPrice": 200,
+  "saleDesc": "already sold 976",
+  "detail": {
+    "category": "Travel",
+    "products": [
+      {
+        "name": "One day trip to Nanjing",
+        "quantity": "1 day",
+        "price": "$67.5"
+      }
+    ],
+    "remark": "free food and drinks"
+  },
+  "validityPeriod": "Oct 20, 2020 to Oct 19, 2020",
+  "purchaseNotes": [
+    {
+      "title": "Days excepted",
+      "content": "Using the coupon at weekends and holidays"
+    },
+    {
+      "title": "Coupon using time",
+      "content": "00:00-24:00"
+    },
+    {
+      "title": "Booking remind",
+      "content": "Booking needed"
+    },
+    {
+      "title": "Rule",
+      "content": "Every coupon for a customer"
+    },
+    {
+      "title": "VIP room",
+      "content": "Available"
+    },
+    {
+      "title": "English tour guide",
+      "content": "Available"
+    },
+    {
+      "title": "Special gifts",
+      "content": "Local handicrafts"
+    }
+  ]
+}

@@ -1,0 +1,59 @@
+{
+  "id": "p-l-5",
+  "shopIds": [
+    "s-10",
+    "s-11",
+    "s-12"
+  ],
+  "nearestShop": "s-10",
+  "shop": "Ye Tea",
+  "tag": "Popular",
+  "picture": "https://github.com/paintmr/pictures-for-treasure-store/blob/main/pl5.jpg?raw=true",
+  "product": "Tea cloth",
+  "description": "Traditional Chinese tea cloth",
+  "currentPrice": 17.5,
+  "oldPrice": 50,
+  "saleDesc": "already sold 685",
+  "detail": {
+    "category": "Decoration",
+    "products": [
+      {
+        "name": "Tea cloth",
+        "quantity": "1 piece",
+        "price": "$17.5"
+      }
+    ],
+    "remark": "free tea"
+  },
+  "validityPeriod": "Oct 20, 2020 to Oct 19, 2020",
+  "purchaseNotes": [
+    {
+      "title": "Days excepted",
+      "content": "Using the coupon at weekends and holidays"
+    },
+    {
+      "title": "Coupon using time",
+      "content": "11:00-22:00"
+    },
+    {
+      "title": "Booking remind",
+      "content": "No need to book, but maybe a waiting list during busy times"
+    },
+    {
+      "title": "Rule",
+      "content": "Every coupon for two customers"
+    },
+    {
+      "title": "VIP room",
+      "content": "Available"
+    },
+    {
+      "title": "Embroideries",
+      "content": "Suzhou embroideries"
+    },
+    {
+      "title": "Other services",
+      "content": "Dry cleaning"
+    }
+  ]
+}
