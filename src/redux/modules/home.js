@@ -147,6 +147,10 @@ export const getLikes = state => {
   })
 }
 
+export const getLikesIsFetching = state => {
+  return state.home.likes.isFetching
+}
+
 export const getPageCountOfLikes = state => {
   return state.home.likes.pageCount
 }
