@@ -18,7 +18,7 @@ class ProductOverview extends Component {
           <span className='productOverview__symbol'>$</span>
           <span className='productOverview__price'>29</span>
           <span className='productOverview__price--old'>$66</span>
-          <a className='productOverview__btn'>Buy Now</a>
+          <a className='productOverview__btn' href='/'>Buy Now</a>
         </div>
         <ul className='productOverview__remark'>
           <li className='productOverview__remarkItem'>
