@@ -1,4 +1,5 @@
 import createReducer from '../../../utils/createReducer';
+import { types } from '../detail';
 
 export const schema = {
   name: 'shops',

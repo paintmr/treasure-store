@@ -1,21 +1,22 @@
+import { combineReducers } from 'redux';
 import url from '../../utils/url';
-import {FETCH_DATA} from '../middleware/api';
-import {schema as productSchema, getProductDetail} from './entities/products';
-import {schema as shopSchema, getShopById} from './entities/shops';
+import { FETCH_DATA } from '../middleware/api';
+import { schema as productSchema, getProductDetail } from './entities/products';
+import { schema as shopSchema, getShopById } from './entities/shops';
 
 export const types = {
   FETCH_PRODUCT_DETAIL_REQUEST:
-  'DETAIL/FETCH_PRODUCT_DETAIL_REQUEST',
+    'DETAIL/FETCH_PRODUCT_DETAIL_REQUEST',
   FETCH_PRODUCT_DETAIL_SUCCESS:
-  'DETAIL/FETCH_PRODUCT_DETAIL_SUCCESS',
+    'DETAIL/FETCH_PRODUCT_DETAIL_SUCCESS',
   FETCH_PRODUCT_DETAIL_FAILURE:
-  'DETAIL/FETCH_PRODUCT_DETAIL_FAILURE',
+    'DETAIL/FETCH_PRODUCT_DETAIL_FAILURE',
   FETCH_SHOP_REQUEST:
-  'DETAIL/FETCH_SHOP_REQUEST',
+    'DETAIL/FETCH_SHOP_REQUEST',
   FETCH_SHOP_SUCCESS:
-  'DETAIL/FETCH_SHOP_SUCCESS',
+    'DETAIL/FETCH_SHOP_SUCCESS',
   FETCH_SHOP_FAILURE:
-  'DETAIL/FETCH_SHOP_FAILURE',
+    'DETAIL/FETCH_SHOP_FAILURE',
 }
 
 const initialState = {
@@ -30,10 +31,10 @@ const initialState = {
 }
 
 export const actions = {
-  loadProductDetail:  id => {
+  loadProductDetail: id => {
     return (dispatch, getState) => {
       const product = getProductDetail(getState(), id);
-      if(product) {
+      if (product) {
         return dispatch(fetchProductDetailSuccess(id))
       }
       const endpoint = url.getProductDetail(id);
@@ -43,7 +44,7 @@ export const actions = {
   loadShopById: id => {
     return (dispatch, getState) => {
       const shop = getShopById(getState(), id);
-      if(shop) {
+      if (shop) {
         return dispatch(fetchShopSuccess(id))
       }
       const endpoint = url.getShopById(id);
@@ -88,8 +89,35 @@ const fetchShopSuccess = (id) => ({
   id,
 })
 
-const reducer = (state = {}, action) => {
-  return state;
+const product = (state = initialState.product, action) => {
+  switch (action.type) {
+    case types.FETCH_PRODUCT_DETAIL_REQUEST:
+      return { ...state, isFetching: true };
+    case types.FETCH_PRODUCT_DETAIL_SUCCESS:
+      return { ...state, isFetching: false, id: action.id };
+    case types.FETCH_PRODUCT_DETAIL_FAILURE:
+      return { ...state, isFetching: false, is: null };
+    default:
+      return state;
+  }
 }
+
+const relatedShop = (state = initialState.relatedShop, action) => {
+  switch (action.type) {
+    case types.FETCH_SHOP_REQUEST:
+      return { ...state, isFetching: true };
+    case types.FETCH_SHOP_SUCCESS:
+      return { ...state, isFetching: false, id: action.id };
+    case types.FETCH_SHOP_FAILURE:
+      return { ...state, isFetching: false, is: null };
+    default:
+      return state;
+  }
+}
+
+const reducer = combineReducers({
+  product,
+  relatedShop
+})
 
 export default reducer;
