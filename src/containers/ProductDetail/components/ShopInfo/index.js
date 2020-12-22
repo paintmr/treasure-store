@@ -11,7 +11,7 @@ class ShopInfo extends Component {
         </div >
         <div className='shopInfo__middle'>
           <div className='shopInfo__middleLeft'>
-            <div className='shopInfo__shopName'>Chi Xia</div>
+            <div className='shopInfo__shopName'>Peige</div>
             <div className='shopInfo__starsWrapper'>
               <span className='shopInfo__stars'>
                 <i className='shopInfo__stars--red' style={{'width':'80%'}}></i>
