@@ -1,24 +1,26 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import './style.css';
 
 class ProductOverview extends Component {
   render() {
+    const { id, product, picture, description, currentPrice, oldPrice } = this.props.product;
     return (
       <div className='productOverview'>
         <div className='productOverview__header'>
           <div className='productOverview__imgContainer'>
-            <img alt='img' className='productOverview__img' src='https://github.com/paintmr/pictures-for-treasure-store/blob/main/pl2.jpg?raw=true'/>
+            <img alt='img' className='productOverview__img' src={picture} />
           </div>
           <div className='productOverview__baseInfo'>
-            <div className='productOverview__title'>Hanfu bag blue</div>
-            <div className='productOverview__content'>Buy Hanfu bag at $29. The Hanfu bag is worth $66 and now costs only $29</div>
+            <div className='productOverview__title'>{product}</div>
+            <div className='productOverview__content'>{description}</div>
           </div>
         </div>
         <div className='productOverview__purchase'>
           <span className='productOverview__symbol'>$</span>
-          <span className='productOverview__price'>29</span>
-          <span className='productOverview__price--old'>$66</span>
-          <a className='productOverview__btn' href='/'>Buy Now</a>
+          <span className='productOverview__price'>{currentPrice}</span>
+          <span className='productOverview__price--old'>${oldPrice}</span>
+          <Link className='productOverview__btn' to={`/purchase/${id}`}>Buy Now</Link>
         </div>
         <ul className='productOverview__remark'>
           <li className='productOverview__remarkItem'>

@@ -3,22 +3,27 @@ import './style.css';
 
 class Detail extends Component {
   render() {
+    const {detail: {category, products, remark}, currentPrice, oldPrice} = this.props.product
     return (
       <div className='detail'>
         <div className='detail__header'>
-          <span>Group buying</span>
+          <span>Group buying information</span>
           <i className='detail__headerIcon'/>
         </div>
         <table className='detail__table' cellPadding='0' cellSpacing='0'>
           <tbody>
             <tr className='detail__row'>
-              <th className='detail__category' colSpan='3'>Drinks</th>
+              <th className='detail__category' colSpan='3'>{category}</th>
             </tr>
-            <tr className='detail__row'>
-              <td>Hanfu bags</td>
-              <td className='detail__td--alignRight'>1 bag</td>
-              <td className='detail__td--alignRight'>$29</td>
-            </tr>
+           {products.map((item, index) => {
+              return (
+                <tr key={index} className='detail__row'>
+                  <td>{item.name}</td>
+                  <td className='detail__td--alignRight'>{item.quantity}</td>
+                  <td className='detail__td--alignRight'>{item.price}</td>
+                </tr>
+              )
+           })}
             <tr className='detail__row'>
               <td/>
               <td className='detail__td--price'>
@@ -27,15 +32,15 @@ class Detail extends Component {
                 <strong className='detail__td--priceNew'>Group-buying price</strong>
               </td>
               <td className='detail__td--price'>
-                66
+                ${oldPrice}
                 <br/>
-                <strong className='detail__td--priceNew'>29</strong>
+                <strong className='detail__td--priceNew'>${currentPrice}</strong>
               </td>
             </tr>
           </tbody>
         </table>
         <div className='detail__remark'>
-          Free drinks
+          {remark}
         </div>
         <div className='detail__more'>
           <span>More detail</span>

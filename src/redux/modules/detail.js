@@ -1,9 +1,19 @@
 import { combineReducers } from 'redux';
 import url from '../../utils/url';
 import { FETCH_DATA } from '../middleware/api';
-import { schema as productSchema, getProductDetail } from './entities/products';
+import { schema as productSchema, getProductDetail,  getProductById } from './entities/products';
 import { schema as shopSchema, getShopById } from './entities/shops';
 
+const initialState = {
+  product: {
+    isFetching: false,
+    id: null,
+  },
+  relatedShop: {
+    isFetching: false,
+    id: null,
+  }
+}
 export const types = {
   FETCH_PRODUCT_DETAIL_REQUEST:
     'DETAIL/FETCH_PRODUCT_DETAIL_REQUEST',
@@ -19,23 +29,12 @@ export const types = {
     'DETAIL/FETCH_SHOP_FAILURE',
 }
 
-const initialState = {
-  product: {
-    isFetching: false,
-    id: null,
-  },
-  relatedShop: {
-    isFetching: false,
-    id: null,
-  }
-}
-
 export const actions = {
   loadProductDetail: id => {
     return (dispatch, getState) => {
       const product = getProductDetail(getState(), id);
       if (product) {
-        return dispatch(fetchProductDetailSuccess(id))
+        return dispatch(fetchProductDetailSuccess(id));
       }
       const endpoint = url.getProductDetail(id);
       return dispatch(fetchProductDetail(endpoint, id));
@@ -53,6 +52,11 @@ export const actions = {
   }
 }
 
+const fetchProductDetailSuccess = (id) => ({
+  type: types.FETCH_PRODUCT_DETAIL_SUCCESS,
+  id,
+})
+
 const fetchProductDetail = (endpoint, id) => ({
   [FETCH_DATA]: {
     types: [
@@ -66,8 +70,8 @@ const fetchProductDetail = (endpoint, id) => ({
   id
 })
 
-const fetchProductDetailSuccess = (id) => ({
-  types: types.FETCH_PRODUCT_DETAIL_SUCCESS,
+const fetchShopSuccess = (id) => ({
+  type: types.FETCH_SHOP_SUCCESS,
   id,
 })
 
@@ -82,11 +86,6 @@ const fetchShopById = (endpoint, id) => ({
     schema: shopSchema
   },
   id
-})
-
-const fetchShopSuccess = (id) => ({
-  types: types.FETCH_SHOP_SUCCESS,
-  id,
 })
 
 const product = (state = initialState.product, action) => {
@@ -121,3 +120,17 @@ const reducer = combineReducers({
 })
 
 export default reducer;
+
+//selectors
+export const getProduct = (state, id) => {
+  return getProductDetail(state, id)
+}
+
+export const getRelatedShop = (state, productId) => {
+  const product =  getProductById(state, productId);
+  let shopId = product ? product.nearestShop : null;
+  if(shopId) {
+    return getShopById(state, shopId);
+  }
+  return null;
+}

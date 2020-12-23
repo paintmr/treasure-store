@@ -1,5 +1,4 @@
 import createReducer from '../../../utils/createReducer';
-import { types } from '../detail';
 
 export const schema = {
   name: 'shops',
@@ -12,6 +11,6 @@ export default reducer;
 
 //selectors
 export const getShopById = (state, id) => {
-  const shop = state.entities.shop[id];
+  const shop = state.entities.shops[id];
   return shop;
 }
