@@ -1,13 +1,16 @@
 import React, { Component } from 'react';
 import SearchBox from './components/SearchBox';
 import PopularSearchKeyWords from './components/PopularSearchKeyWords';
+import SearchHistory from './components/SearchHistory';
 
 class Search extends Component {
+  
   render() {
     return (
       <div>
         <SearchBox />
         <PopularSearchKeyWords />
+        <SearchHistory />
       </div>
     );
   }
