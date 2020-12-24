@@ -6,6 +6,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import Home from '../Home';
 import productDetail from '../ProductDetail';
+import Search from '../Search';
 
 import { actions as appActions, getError } from '../../redux/modules/app';
 import ErrorToast from '../../components/ErrorToast';
@@ -19,6 +20,7 @@ class App extends Component {
           {/* 用switch，则匹配到第1个路由后，就停止匹配 */}
           <Switch>
             <Route path='/detail/:id' component={productDetail} />
+            <Route path='/search' component={Search} />
             <Route path='/' component={Home} />
           </Switch>
         </Router>
