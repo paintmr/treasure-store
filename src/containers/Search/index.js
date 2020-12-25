@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import SearchBox from './components/SearchBox';
-import PopularSearchKeyWords from './components/PopularSearchKeyWords';
+import PopularSearchKeywords from './components/PopularSearchKeywords';
 import SearchHistory from './components/SearchHistory';
 
 class Search extends Component {
@@ -9,7 +9,7 @@ class Search extends Component {
     return (
       <div>
         <SearchBox />
-        <PopularSearchKeyWords />
+        <PopularSearchKeywords />
         <SearchHistory />
       </div>
     );

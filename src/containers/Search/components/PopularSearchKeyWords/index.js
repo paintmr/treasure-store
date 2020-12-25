@@ -3,7 +3,7 @@ import './style.css';
 
 const data = ['Chixia', 'Tianfu', 'Yequ', "Dinner Time", 'Peige', 'Ning Tea', 'Yuan Zhai', 'Ye Tea', 'Anran Travel']
 
-class PopularSearchKeyWords extends Component {
+class PopularSearchKeywords extends Component {
   render() {
     return (
       <div className='popularSearch '>
@@ -20,4 +20,4 @@ class PopularSearchKeyWords extends Component {
   }
 }
 
-export default PopularSearchKeyWords;
+export default PopularSearchKeywords;
