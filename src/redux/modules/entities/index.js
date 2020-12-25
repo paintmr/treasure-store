@@ -1,6 +1,7 @@
 import { combineReducers } from "redux";
 import products from "./products";
 import shops from  "./shops";
+import keywords from './keywords';
 import orders from "./orders";
 import comments from "./comments";
 
@@ -8,6 +9,7 @@ import comments from "./comments";
 const rootReducer = combineReducers({
   products,
   shops,
+  keywords,
   orders,
   comments
 })
