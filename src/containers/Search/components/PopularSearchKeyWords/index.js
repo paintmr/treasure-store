@@ -1,22 +1,25 @@
 import React, { Component } from 'react';
 import './style.css';
 
-const data = ['Chixia', 'Tianfu', 'Yequ', "Dinner Time", 'Peige', 'Ning Tea', 'Yuan Zhai', 'Ye Tea', 'Anran Travel']
-
 class PopularSearchKeywords extends Component {
   render() {
+    const {popularKeywords} = this.props
     return (
       <div className='popularSearch '>
         {
-          data.map((item, index) => {
+          popularKeywords.map((item, index) => {
             return (
-              <span key={index} className='popularSearch__item'>{item}</span>
+              <span key={item.id} onClick={this.handleClick.bind(this, item)} className='popularSearch__item'>{item.keyword}</span>
             )
           })
         }
         
       </div>
     );
+  }
+  
+  handleClick = (item) => {
+    this.props.onClickItem(item);
   }
 }
 

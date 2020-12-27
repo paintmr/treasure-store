@@ -8,3 +8,7 @@ export const schema = {
 const reducer = createReducer(schema.name);
 
 export default reducer;
+
+export const getKeywordById = (state, id) => {
+  return state.entities.keywords[id]
+}

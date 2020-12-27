@@ -9,20 +9,20 @@ export default store => next => action => {
     return next(action)
   }
 
-  const { endpoint, schema, types } = callAPI
-  if(typeof endpoint !== 'string') {
-    throw new Error('Endpoint must be a string URL.')
-  }
-  if(!schema) {
-    throw new Error('There must be an entity schema.')
-  }
+  const { types, endpoint, schema } = callAPI
   if(!Array.isArray(types) && types.length !==3) {
     throw new Error('There must be an array containing 3 actions.')
   }
   if(!types.every(type => typeof type === 'string')) {
     throw new Error('The action type must be a string.')
   }
-
+  if(typeof endpoint !== 'string') {
+    throw new Error('Endpoint must be a string URL.')
+  }
+  if(!schema) {
+    throw new Error('There must be an entity schema.')
+  }
+  
   const actionWith = data => {
     const finalAction = {...action, ...data}
     delete finalAction[FETCH_DATA]
