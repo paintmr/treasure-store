@@ -42,7 +42,7 @@ class Search extends Component {
     const { setInputText, addHistoryKeyword } = this.props.searchActions;
     setInputText(item.keyword);
     addHistoryKeyword(item.id);
-    //跳轉到搜索結果頁邏輯  todo
+    this.props.history.push('/search_result');
   }
 
   handleClearHistory = () => {

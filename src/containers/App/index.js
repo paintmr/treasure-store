@@ -7,6 +7,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Home from '../Home';
 import productDetail from '../ProductDetail';
 import Search from '../Search';
+import SearchResult from '../SearchResult';
 
 import { actions as appActions, getError } from '../../redux/modules/app';
 import ErrorToast from '../../components/ErrorToast';
@@ -21,6 +22,7 @@ class App extends Component {
           <Switch>
             <Route path='/detail/:id' component={productDetail} />
             <Route path='/search' component={Search} />
+            <Route path='/search_result' component={SearchResult} />
             <Route path='/' component={Home} />
           </Switch>
         </Router>
