@@ -6,5 +6,7 @@ export default {
   getPopularKeywords: () => `./mock/keywords/popular.json`,
 
   // 在真实项目中，是这样根据text去取数据的。但是在模拟项目中，不论text是何值，从mock数据中取得的值都是一样的。
-  getRelatedKeywords: (text) => `/mock/keywords/related.json?keyword=${text}`
+  getRelatedKeywords: (text) => `/mock/keywords/related.json?keyword=${text}`,
+  getRelatedShops: (keyword) => `/mock/shops/related.json?keyword=${keyword}`,
+
 }

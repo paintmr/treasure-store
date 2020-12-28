@@ -1,6 +1,7 @@
 import url from '../../utils/url';
 import { FETCH_DATA } from '../middleware/api';
 import { schema as keywordSchema, getKeywordById } from './entities/keywords';
+import { schema as shopSchema, getShopById } from './entities/shops';
 import { combineReducers } from 'redux';
 
 const initialState = {
@@ -11,17 +12,25 @@ const initialState = {
   },
   /**relatedKeywords对象结构
    * {
-   *  '火锅': {
+   *  'hotpot': {
    *      isFetching: false,
    *      ids: []   
    *   }
    * }
    * 
   */
-  relatedKeywords: {
-
-  },
-  historyKeywords: []
+  relatedKeywords: {},
+  historyKeywords: [],
+  /**
+  *searchedShops对象结构：
+  *{
+  *  'keywordId': {
+  *     isFetching: false,
+  *     ids: []
+  *   }
+  *}
+  */
+ searchedShops: {},
 }
 
 export const types = {
@@ -47,7 +56,14 @@ export const types = {
   ADD_HISTORY_KEYWORD:
     'SEARCH/ADD_HISTORY_KEYWORD',
   CLEAR_HISTORY_KEYWORDS:
-    'SEARCH/CLEAR_HISTORY_KEYWORDS'
+    'SEARCH/CLEAR_HISTORY_KEYWORDS',
+
+  FETCH_RELATED_SHOPS_REQUEST:
+    'SEARCH/FETCH_RELATED_SHOPS_REQUEST',
+  FETCH_RELATED_SHOPS_SUCCESS:
+    'SEARCH/FETCH_RELATED_SHOPS_SUCCESS',
+  FETCH_RELATED_SHOPS_FAILURE:
+    'SEARCH/FETCH_RELATED_SHOPS_FAILURE',
 }
 
 export const actions = {
@@ -84,7 +100,17 @@ export const actions = {
   }),
   clearHistoryKeywords: () => ({
     type: types.CLEAR_HISTORY_KEYWORDS
-  })
+  }),
+  loadRelatedShops: (keywordId) => {
+    return (dispatch, getState) => {
+      const {searchedShops} = getState().search;
+      if(searchedShops[keywordId]) {
+        return null
+      }     
+      const endpoint = url.getRelatedShops(keywordId);
+      return dispatch(fetchRelatedShops(keywordId, endpoint));
+    }
+  }
 }
 
 const fetchPopularKeywords = endpoint => ({
@@ -110,6 +136,19 @@ const fetchRelatedKeywords = (text, endpoint) => ({
     schema: keywordSchema
   },
   text
+})
+
+const fetchRelatedShops = (keywordId, endpoint) => ({
+  [FETCH_DATA]: {
+    types: [
+      types.FETCH_RELATED_SHOPS_REQUEST,
+      types.FETCH_RELATED_SHOPS_SUCCESS,
+      types.FETCH_RELATED_SHOPS_FAILURE,
+    ],
+    endpoint,
+    schema:shopSchema
+  },
+  keywordId
 })
 
 //reducers
@@ -190,16 +229,44 @@ const historyKeywords = (state = initialState.historyKeywords, action) => {
   }
 }
 
+const searchedShops = (state = initialState.searchedShops, action) => {
+  switch(action.type) {
+    case types.FETCH_RELATED_SHOPS_REQUEST:
+    case types.FETCH_RELATED_SHOPS_SUCCESS:      
+    case types.FETCH_RELATED_SHOPS_FAILURE:
+      return {
+        ...state,
+        [action.keywordId]: searchedShopsByKeyword(state[action.keywordId], action)
+      };
+    default:
+      return state;
+  }
+}
+
+const searchedShopsByKeyword = (state = {isFetching: false, ids: []}, action) => {
+  switch(action.type) {
+    case types.FETCH_RELATED_SHOPS_REQUEST:
+      return {...state, isFetching: true};
+    case types.FETCH_RELATED_SHOPS_SUCCESS:      
+      return {...state, isFetching: false, ids: state.ids.concat(action.response.ids)};
+    case types.FETCH_RELATED_SHOPS_FAILURE:
+      return {...state, isFetching: false};
+    default:
+      return state;
+  }
+}
+
 const reducer = combineReducers({
   popularKeywords,
   relatedKeywords,
   inputText,
-  historyKeywords
+  historyKeywords,
+  searchedShops
 })
 
 export default reducer;
 
-//selectors
+//selectors for Search Page
 //不同的redux模块之间，也是通过selectors通讯
 export const getPopularKeywords = state => {
   return state.search.popularKeywords.ids.map(id => {
@@ -229,4 +296,25 @@ export const getHistoryKeywords = state => {
   return state.search.historyKeywords.map(id => {
     return getKeywordById(state,id)
   })
+}
+
+//selectors for SearchResult page
+export const getCurrentKeyword = state => {
+  const keywordId = state.search.historyKeywords[0];
+  if(!keywordId) {
+    return '';
+  }
+  return getKeywordById(state, keywordId).keyword;
+}
+
+export const getSearchedShops = state => {
+  const keywordId = state.search.historyKeywords[0];
+  if(!keywordId) {
+    return [];
+  }
+  const shops = state.search.searchedShops[keywordId];
+  return shops.ids.map( id => {
+    return getShopById(state,id);
+  })
+
 }

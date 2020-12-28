@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import SearchBox from './components/SearchBox';
 import PopularSearchKeywords from './components/PopularSearchKeywords';
 import SearchHistory from './components/SearchHistory';
-import { actions as searchActions, getPopularKeywords, getInputText, getRelatedKeywords, getHistoryKeywords } from '../../redux/modules/search';
+import { actions as searchActions, getPopularKeywords, getInputText, getRelatedKeywords, getHistoryKeywords} from '../../redux/modules/search';
 
 class Search extends Component {
 
@@ -39,10 +39,12 @@ class Search extends Component {
   }
 
   handleClickItem = item => {
-    const { setInputText, addHistoryKeyword } = this.props.searchActions;
+    const { setInputText, addHistoryKeyword, loadRelatedShops } = this.props.searchActions;
     setInputText(item.keyword);
     addHistoryKeyword(item.id);
     this.props.history.push('/search_result');
+    //get shops related to the keyword
+    loadRelatedShops(item.id)
   }
 
   handleClearHistory = () => {
