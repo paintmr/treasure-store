@@ -76,6 +76,8 @@
   text-decoration: none;
   background: #DE4747;
   border: none;
+  /* 點擊按鈕時，會有個橘色的邊框，加上outline:none;，點擊時就沒有這個邊框了 */
+  outline:none;  
   border-radius: 4px;
   font-size: 14px;
   letter-spacing: 6px;

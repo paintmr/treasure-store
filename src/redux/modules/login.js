@@ -1,8 +1,8 @@
 const initialState = {
-  username: '',
+  username: localStorage.getItem('username') || '',
   password: '',
   isFetching: false,
-  status: false, //登录状态标识
+  status: localStorage.getItem('login') || false, //登录状态标识
 }
 
 export const types = {
@@ -37,6 +37,8 @@ export const actions = {
       return new Promise((resolve, reject) => {
         setTimeout(() => {
           dispatch(loginSuccess());
+          localStorage.setItem('username', username);
+          localStorage.setItem('login', true);//password是隱私，不適合保持在localStorage中
           resolve();
         }, 1000)
       })
@@ -44,9 +46,13 @@ export const actions = {
   },
 
   //真正的登出，是前後端都要去消除登錄狀態。
-  logout: () => ({
-    type: types.LOGOUT
-  })
+  logout: () => {
+    localStorage.removeItem('username');
+    localStorage.removeItem('login');
+    return {
+      type: types.LOGOUT
+    };
+  }
 }
 
 const loginFailute = error => ({
