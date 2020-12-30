@@ -27,21 +27,19 @@ export const actions = {
 
   login: () => {
     //異步action，執行登錄
-    login: () => {
-      return (dispatch, getState) => {
-        const {usernname, password} = getState().login;
-        if(!(username && username.length > 0 && password && password.length > 0)){
-          return dispatch(loginFailute('Please enter the username and password.'))
-        }
-        dispatch(loginRequest());
-        //模擬登錄操作。因為通過fetch調用PAI接口時，返回的是個promise對象，這裡可以手動創建一個promise對象。然後在promise內使用setTimeout，模擬異步操作。
-        return new Promise((resolve, reject) => {
-          setTimeout(() => {
-            dispatch(loginSuccess());
-            resolve();
-          }, 1000)
-        })
+    return (dispatch, getState) => {
+      const {username, password} = getState().login;
+      if(!(username && username.length > 0 && password && password.length > 0)){
+        return dispatch(loginFailute('Please enter the username and password.'))
       }
+      dispatch(loginRequest());
+      //模擬登錄操作。因為通過fetch調用PAI接口時，返回的是個promise對象，這裡可以手動創建一個promise對象。然後在promise內使用setTimeout，模擬異步操作。
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          dispatch(loginSuccess());
+          resolve();
+        }, 1000)
+      })
     }
   },
 
@@ -85,3 +83,10 @@ const reducer = (state = initialState, action) => {
 }
 
 export default reducer;
+
+//selectors
+export const getUsername = state => state.login.username;
+
+export const getPassword = state => state.login.password;
+
+export const islogin = state => state.login.status;
