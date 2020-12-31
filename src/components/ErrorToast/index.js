@@ -5,8 +5,10 @@ class ErrorToast extends Component {
   render() {
     const { msg } = this.props
     return (
-      <div>
-        {msg}
+      <div className='errorToast'>
+        <div className='errorToast__text'>
+          {msg}
+        </div>
       </div>
     );
   }

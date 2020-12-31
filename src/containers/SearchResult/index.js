@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import SearchResultHeader from './SearchResultHeader'
-import KeywordBox from './KeywordBox';
+import SearchResultHeader from './components/SearchResultHeader'
+import KeywordBox from './components/KeywordBox';
 import Banner from '../../components/Banner';
-import ShopList from './ShopList';
+import ShopList from './components/ShopList';
 import {getCurrentKeyword, getSearchedShops} from '../../redux/modules/search';
 
 class SearchResult extends Component {
