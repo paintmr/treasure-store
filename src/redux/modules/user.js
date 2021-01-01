@@ -1,6 +1,7 @@
+import { combineReducers } from 'redux';
 import url from '../../utils/url';
 import {FETCH_DATA} from '../middleware/api';
-import {schema} from './entities/orders';
+import {schema, PAID_TYPE, TO_BE_PAID_TYPE, REFUND_TYPE} from './entities/orders';
 
 const initialState = {
   orders: {
@@ -49,3 +50,46 @@ const fetchOrders = (endpoint) => ({
     schema
   }
 })
+
+//reducers
+const orders = (state = initialState.orders, action) => {
+  switch(action.type) {
+    case types.FETCH_ORDERS_REQUEST:
+      return {...state, isFetching: true};
+    case types.FETCH_ORDERS_SUCCESS:
+      const toBePaidIds = action.response.ids.filter(
+        id => action.response.orders[id].type === TO_BE_PAID_TYPE
+      );
+      const paidIds = action.response.ids.filter(
+        id => action.response.orders[id].type === PAID_TYPE
+      );
+      const refundIds = action.response.ids.filter(
+        id => action.response.orders[id].type === REFUND_TYPE
+      );
+      return {
+        ...state,
+        isFetching: false,
+        ids: state.ids.concat(action.response.ids),
+        toBePaidIds: state.toBePaidIds.concat(toBePaidIds),
+        paidIds: state.paidIds.concat(paidIds),
+        refundIds: state.refundIds.concat(refundIds)
+      };
+    default:
+      return state;
+  }
+};
+
+const currentTab = (state = initialState.currentTab, action) => {
+  switch(action.type){
+    case types.SET_CURRENT_TAB:
+      return action.index;
+    default:
+      return state;
+  }
+}
+const reducer = combineReducers({
+  currentTab,
+  orders
+})
+
+export default reducer;
