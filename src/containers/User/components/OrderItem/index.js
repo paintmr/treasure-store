@@ -27,11 +27,15 @@ class OrderItem extends Component {
                 <div className='orderItem__btn'>Comment</div>
               ): null
             }
-            <div className='orderItem__btn'>Delete</div>
+            <div className='orderItem__btn' onClick={this.handleRemove}>Delete</div>
           </div>
         </div>
       </div>
     );
+  }
+
+  handleRemove = () => {
+    this.props.onRemove()
   }
 }
 
