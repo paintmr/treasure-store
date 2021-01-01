@@ -12,3 +12,8 @@ export const REFUND_TYPE = 3;
 const reducer = createReducer(schema.name)
 
 export default reducer;
+
+//selectors
+export const getOrderById = (state, id) => {
+  return state.entities.orders[id]
+}

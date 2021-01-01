@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
 import url from '../../utils/url';
 import {FETCH_DATA} from '../middleware/api';
-import {schema, PAID_TYPE, TO_BE_PAID_TYPE, REFUND_TYPE} from './entities/orders';
+import {schema, PAID_TYPE, TO_BE_PAID_TYPE, REFUND_TYPE, getOrderById} from './entities/orders';
 
 const initialState = {
   orders: {
@@ -30,7 +30,7 @@ export const actions = {
         return null
       }
       const endpoint = url.getOrders();
-      return dispatch(fetchOrders(endpint));
+      return dispatch(fetchOrders(endpoint));
     }
   },
   setCurrentTab: index => ({
@@ -74,6 +74,8 @@ const orders = (state = initialState.orders, action) => {
         paidIds: state.paidIds.concat(paidIds),
         refundIds: state.refundIds.concat(refundIds)
       };
+    case types.FETCH_ORDERS_FAILURE:
+      return {...state, isFetching: false}
     default:
       return state;
   }
@@ -93,3 +95,15 @@ const reducer = combineReducers({
 })
 
 export default reducer;
+
+//selectors
+export const getCurrentTab = state => {
+  return state.user.currentTab
+}
+
+export const getOrders = state => {
+  const key = ['ids', 'toBePaidIds', 'paidIds', 'refundIds'][state.user.currentTab];
+  return state.user.orders[key].map(id => {
+    return getOrderById(state, id);
+  })
+}
