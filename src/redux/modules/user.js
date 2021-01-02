@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
 import url from '../../utils/url';
 import {FETCH_DATA} from '../middleware/api';
-import {schema, PAID_TYPE, TO_BE_PAID_TYPE, REFUND_TYPE, getOrderById} from './entities/orders';
+import {schema, PAID_TYPE, TO_BE_PAID_TYPE, REFUND_TYPE, getOrderById , actions as orderActions} from './entities/orders';
 
 const initialState = {
   orders: {
@@ -12,6 +12,10 @@ const initialState = {
     refundIds: []
   },
   currentTab: 0,
+  currentOrder: {
+    id: null,
+    idDeleting: false,
+  }
 }
 
 export const types = {
@@ -19,7 +23,11 @@ export const types = {
   FETCH_ORDERS_SUCCESS: 'USER/FETCH_ORDERS_SUCCESS',
   FETCH_ORDERS_FAILURE: 'USER/FETCH_ORDERS_FAILURE',
 
-  SET_CURRENT_TAB: 'USER/SET_CURRENT_TAB'
+  SET_CURRENT_TAB: 'USER/SET_CURRENT_TAB',
+
+  DELETE_ORDER_REQUEST: 'USER/DELETE_ORDER_REQUEST',
+  DELETE_ORDER_SUCCESS: 'USER/DELETE_ORDER_SUCCESS',
+  DELETE_ORDER_FAILURE: 'USER/DELETE_ORDER_FAILURE',
 }
 
 export const actions = {
@@ -36,7 +44,24 @@ export const actions = {
   setCurrentTab: index => ({
     type: types.SET_CURRENT_TAB,
     index
-  })
+  }),
+  removeOrder: () => {
+    return (dispatch, getState) => {
+      const {id} = getState().user.currentOrder
+      if(id) {
+        dispatch(deleteOrderRequest());
+        //通过promise来模拟后端删除数据库数据
+        return new Promise((resolve, reject) => {
+          setTimeout(() => {
+            dispatch(deleteOrderSuccess(id));
+            //不仅要删除user里面的order id，还要根据id去order里面删除相关的order
+            dispatch(orderActions.deleteOrder(id));
+            resolve()
+          }, 500)
+        })
+      }
+    }
+  }
 }
 
 const fetchOrders = (endpoint) => ({
@@ -49,6 +74,15 @@ const fetchOrders = (endpoint) => ({
     endpoint,
     schema
   }
+})
+
+const deleteOrderRequest = () => ({
+  type: types.DELETE_ORDER_REQUEST
+})
+
+const deleteOrderSuccess = (orderId) => ({
+  type: types.DELETE_ORDER_SUCCESS,
+  orderId
 })
 
 //reducers
