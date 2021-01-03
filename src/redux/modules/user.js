@@ -14,7 +14,7 @@ const initialState = {
   currentTab: 0,
   currentOrder: {
     id: null,
-    idDeleting: false,
+    isDeleting: false,
   }
 }
 

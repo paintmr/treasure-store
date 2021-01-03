@@ -29,7 +29,7 @@ export const actions = {
     //異步action，執行登錄
     return (dispatch, getState) => {
       const {username, password} = getState().login;
-      if(!(/\d{8}/.test(username))){
+      if(!(/^\d{8}$/.test(username))){
         return dispatch(loginFailute('Please enter a HongKong mobile number (8 numbers)'))
       }
       if(!(username && username.length > 0 && password && password.length > 0)){

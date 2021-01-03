@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import './style.css';
 
 class Confirm extends Component {
   render() {
@@ -9,7 +10,7 @@ class Confirm extends Component {
           <div className='confirm__content'>{content}</div>
           <div className='confirm__btns'>
             <a className='confirm__btn' onClick={onCancel}>{cancelText}</a>
-            <a className='confirm__btn' onCllick={onConfirm}>{confirmText}</a>
+            <a className='confirm__btn' onClick={onConfirm}>{confirmText}</a>
           </div>
         </div>      
       </div>
