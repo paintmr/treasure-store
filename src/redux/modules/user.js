@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
 import url from '../../utils/url';
 import {FETCH_DATA} from '../middleware/api';
-import {schema, PAID_TYPE, TO_BE_PAID_TYPE, REFUND_TYPE, getOrderById , actions as orderActions} from './entities/orders';
+import {schema, PAID_TYPE, TO_BE_PAID_TYPE, REFUND_TYPE, getOrderById , actions as orderActions, types as orderTypes} from './entities/orders';
 
 const initialState = {
   orders: {
@@ -25,6 +25,9 @@ export const types = {
 
   SET_CURRENT_TAB: 'USER/SET_CURRENT_TAB',
 
+  SHOW_DELETE_DIALOG: 'USER/SHOW_DELETE_DIALOG',
+  HIDE_DELETE_DIALOG: 'USER/HIDE_DELETE_DIALOG',
+
   DELETE_ORDER_REQUEST: 'USER/DELETE_ORDER_REQUEST',
   DELETE_ORDER_SUCCESS: 'USER/DELETE_ORDER_SUCCESS',
   DELETE_ORDER_FAILURE: 'USER/DELETE_ORDER_FAILURE',
@@ -44,6 +47,13 @@ export const actions = {
   setCurrentTab: index => ({
     type: types.SET_CURRENT_TAB,
     index
+  }),
+  showDeleteDialog: orderId => ({
+    type: types.SHOW_DELETE_DIALOG,
+    orderId
+  }),
+  hideDeleteDialog: () => ({
+    type: types.HIDE_DELETE_DIALOG,
   }),
   removeOrder: () => {
     return (dispatch, getState) => {
@@ -109,11 +119,26 @@ const orders = (state = initialState.orders, action) => {
         refundIds: state.refundIds.concat(refundIds)
       };
     case types.FETCH_ORDERS_FAILURE:
-      return {...state, isFetching: false}
+      return {...state, isFetching: false};
+    case types.DELETE_ORDER_SUCCESS:
+    case orderTypes.DELETE_ORDER:
+      return {
+        ...state,
+        ids: removeOrderId(state, 'ids', action.orderId),
+        toBePaidIds: removeOrderId(state, 'toBePaidIds', action.orderId),
+        paidIds: removeOrderId(state, 'paidIds', action.orderId),
+        refundIds: removeOrderId(state, 'refundIds', action.orderId),
+      }
     default:
       return state;
   }
 };
+
+const removeOrderId = (state, key, orderId) => {
+  return state[key].filter(id => {
+    return id !==orderId
+  })
+}
 
 const currentTab = (state = initialState.currentTab, action) => {
   switch(action.type){
@@ -123,9 +148,28 @@ const currentTab = (state = initialState.currentTab, action) => {
       return state;
   }
 }
+
+const currentOrder = (state= initialState.currentOrder, action) => {
+  switch(action.type) {
+    case types.SHOW_DELETE_DIALOG:
+      return {
+        ...state,
+        id: action.orderId,
+        isDeleting: true
+      }
+    case types.HIDE_DELETE_DIALOG:
+    case types.DELETE_ORDER_SUCCESS:
+    case types.DELETE_ORDER_FAILURE:
+      return initialState.currentOrder
+    default:
+      return state;
+  }
+}
+
 const reducer = combineReducers({
   currentTab,
-  orders
+  orders,
+  currentOrder
 })
 
 export default reducer;
@@ -140,4 +184,8 @@ export const getOrders = state => {
   return state.user.orders[key].map(id => {
     return getOrderById(state, id);
   })
+}
+
+export const getDeletingOrderId = (state) => {
+  return state.user.currentOrder && state.user.currentOrder.isDeleting ? state.user.currentOrder.id : null;
 }
