@@ -30,6 +30,7 @@ class OrderItem extends Component {
             <div className='orderItem__btn' onClick={this.handleRemove}>Delete</div>
           </div>
         </div>
+        {this.renderCommentArea()}
       </div>
     );
   }
@@ -37,6 +38,38 @@ class OrderItem extends Component {
   handleRemove = () => {
     this.props.onRemove()
   }
+
+  renderCommentArea = () => {
+    return (
+      <div className='orderItem__commentContainer'>
+        <textarea className='orderItem__comment' onChange={this.handleCommentChange} value=''/>
+        {this.renderStars()}
+        <button className='orderItem__commentBtn' onClick={null}>Submit</button>
+        <button className='orderItem__commentBtn' onClick={null}>Cancel</button>
+      </div>
+    )
+  }
+
+  handleCommentChange = () => {
+
+  }
+
+  renderStars = () => {
+    return (
+      <div>
+        {
+          [1,2,3,4,5].map((item, index) => {
+            const lightClass = 3>= item ? 'orderItem__star--light' : ''
+            return (
+              <span className={'orderItem__star ' + lightClass} key={index} onClick={null}>★</span>
+            )
+          })
+        }
+      </div>
+    )
+
+  }
+
 }
 
 export default OrderItem;
