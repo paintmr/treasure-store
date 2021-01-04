@@ -10,13 +10,19 @@ export const TO_BE_PAID_TYPE  = 2;
 export const REFUND_TYPE = 3;
 
 export const types = {
-  DELETE_ORDER: 'ORDERS/DELETE_ORDER'
+  DELETE_ORDER: 'ORDERS/DELETE_ORDER',
+  ADD_COMMENT: 'ORDERS/ADD_COMMENT'
 }
 
 export const actions = {
   deleteOrder: (orderId) => ({
     type: types.DELETE_ORDER,
     orderId
+  }),
+  addComment: (orderId, commentId) => ({
+    type: types.ADD_COMMENT,
+    orderId,
+    commentId
   })
 }
 
@@ -26,7 +32,16 @@ const reducer = (state = {}, action) => {
   if(action.type === types.DELETE_ORDER) {
     const {[action.orderId] : deleteOrder, ...restOrders} = state;
     return restOrders;
-  } else {
+  } else if(action.type === types.ADD_COMMENT) {
+    return {
+      ...state,
+      [action.orderId]: {
+        ...state[action.orderId],
+        commentId: action.commentId
+      }
+    }
+  }
+  else {
     return normalReducer(state, action);
   }
 }

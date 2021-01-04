@@ -2,6 +2,7 @@ import { combineReducers } from 'redux';
 import url from '../../utils/url';
 import {FETCH_DATA} from '../middleware/api';
 import {schema, PAID_TYPE, TO_BE_PAID_TYPE, REFUND_TYPE, getOrderById , actions as orderActions, types as orderTypes} from './entities/orders';
+import {actions as commentActions} from './entities/comments';
 
 const initialState = {
   orders: {
@@ -15,6 +16,9 @@ const initialState = {
   currentOrder: {
     id: null,
     isDeleting: false,
+    isCommenting: false,
+    comment: '',
+    stars: 0,
   }
 }
 
@@ -31,6 +35,16 @@ export const types = {
   DELETE_ORDER_REQUEST: 'USER/DELETE_ORDER_REQUEST',
   DELETE_ORDER_SUCCESS: 'USER/DELETE_ORDER_SUCCESS',
   DELETE_ORDER_FAILURE: 'USER/DELETE_ORDER_FAILURE',
+
+  SHOW_COMMENT_AREA: 'USER/SHOW_COMMENT_AREA',
+  HIDE_COMMENT_AREA: 'USER/HIDE_COMMENT_AREA',
+
+  SET_COMMENT: 'USER/SET_COMMENT',
+  SET_STARS: 'USER/SET_STARS',
+
+  POST_COMMENT_REQUEST: 'USER/POST_COMMENT_REQUEST',
+  POST_COMMENT_SUCCESS: 'USER/POST_COMMENT_SUCCESS',
+  POST_COMMENT_FAILURE: 'USER/POST_COMMENT_FAILURE',
 }
 
 export const actions = {
@@ -71,7 +85,43 @@ export const actions = {
         })
       }
     }
+  },
+  showCommentArea: orderId => ({
+    type: types.SHOW_COMMENT_AREA,
+    orderId
+  }),
+  hideCommentArea: () => ({
+    type: types.HIDE_COMMENT_AREA
+  }),
+  setComment: comment => ({
+    type: types.SET_COMMENT,
+    comment
+  }),
+  setStars: stars => ({
+    type: types.SET_STARS,
+    stars
+  }),
+  submitComment: () => {
+    return (dispatch, getState) => {
+      dispatch(postCommentRequest());
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          const {currentOrder: {id, stars, comment}} = getState().user;
+          const commentObj = {
+            // 提交评论的时候，评论id肯定由服务端生成，这里是个前端项目，自己来模拟自动生成id
+            id: +new Date(),
+            stars: stars,
+            comment: comment,
+          }
+          dispatch(postCommentSuccess());
+          dispatch(orderActions.addComment(id, commentObj.id));
+          dispatch(commentActions.addComment(commentObj));
+          resolve();
+        })
+      })
+    }
   }
+
 }
 
 const fetchOrders = (endpoint) => ({
@@ -93,6 +143,14 @@ const deleteOrderRequest = () => ({
 const deleteOrderSuccess = (orderId) => ({
   type: types.DELETE_ORDER_SUCCESS,
   orderId
+})
+
+const postCommentRequest = () => ({
+  type: types.POST_COMMENT_REQUEST
+})
+
+const postCommentSuccess = () => ({
+  type: types.POST_COMMENT_SUCCESS
 })
 
 //reducers
@@ -156,11 +214,24 @@ const currentOrder = (state= initialState.currentOrder, action) => {
         ...state,
         id: action.orderId,
         isDeleting: true
-      }
+      };
+    case types.SHOW_COMMENT_AREA:
+      return {
+        ...state,
+        id: action.orderId,
+        isCommenting: true,
+      };
     case types.HIDE_DELETE_DIALOG:
     case types.DELETE_ORDER_SUCCESS:
     case types.DELETE_ORDER_FAILURE:
-      return initialState.currentOrder
+    case types.HIDE_COMMENT_AREA:
+    case types.POST_COMMENT_SUCCESS:
+    case types.POST_COMMENT_FAILURE:
+      return initialState.currentOrder;
+    case types.SET_COMMENT:
+      return {...state, comment:action.comment};
+    case types.SET_STARS:
+      return {...state, stars:action.stars};
     default:
       return state;
   }
