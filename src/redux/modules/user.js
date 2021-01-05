@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux';
 import url from '../../utils/url';
-import {FETCH_DATA} from '../middleware/api';
-import {schema, PAID_TYPE, TO_BE_PAID_TYPE, REFUND_TYPE, getOrderById , actions as orderActions, types as orderTypes} from './entities/orders';
-import {actions as commentActions} from './entities/comments';
+import { FETCH_DATA } from '../middleware/api';
+import { schema, PAID_TYPE, TO_BE_PAID_TYPE, REFUND_TYPE, getOrderById, actions as orderActions, types as orderTypes } from './entities/orders';
+import { actions as commentActions } from './entities/comments';
 
 const initialState = {
   orders: {
@@ -50,8 +50,8 @@ export const types = {
 export const actions = {
   loadOrders: () => {
     return (dispatch, getState) => {
-      const {ids} = getState().user.orders;
-      if(ids.length > 0) {
+      const { ids } = getState().user.orders;
+      if (ids.length > 0) {
         return null
       }
       const endpoint = url.getOrders();
@@ -71,8 +71,8 @@ export const actions = {
   }),
   removeOrder: () => {
     return (dispatch, getState) => {
-      const {id} = getState().user.currentOrder
-      if(id) {
+      const { id } = getState().user.currentOrder
+      if (id) {
         dispatch(deleteOrderRequest());
         //通过promise来模拟后端删除数据库数据
         return new Promise((resolve, reject) => {
@@ -106,7 +106,7 @@ export const actions = {
       dispatch(postCommentRequest());
       return new Promise((resolve, reject) => {
         setTimeout(() => {
-          const {currentOrder: {id, stars, comment}} = getState().user;
+          const { currentOrder: { id, stars, comment } } = getState().user;
           const commentObj = {
             // 提交评论的时候，评论id肯定由服务端生成，这里是个前端项目，自己来模拟自动生成id
             id: +new Date(),
@@ -155,9 +155,9 @@ const postCommentSuccess = () => ({
 
 //reducers
 const orders = (state = initialState.orders, action) => {
-  switch(action.type) {
+  switch (action.type) {
     case types.FETCH_ORDERS_REQUEST:
-      return {...state, isFetching: true};
+      return { ...state, isFetching: true };
     case types.FETCH_ORDERS_SUCCESS:
       const toBePaidIds = action.response.ids.filter(
         id => action.response.orders[id].type === TO_BE_PAID_TYPE
@@ -177,7 +177,7 @@ const orders = (state = initialState.orders, action) => {
         refundIds: state.refundIds.concat(refundIds)
       };
     case types.FETCH_ORDERS_FAILURE:
-      return {...state, isFetching: false};
+      return { ...state, isFetching: false };
     case types.DELETE_ORDER_SUCCESS:
     case orderTypes.DELETE_ORDER:
       return {
@@ -194,12 +194,12 @@ const orders = (state = initialState.orders, action) => {
 
 const removeOrderId = (state, key, orderId) => {
   return state[key].filter(id => {
-    return id !==orderId
+    return id !== orderId
   })
 }
 
 const currentTab = (state = initialState.currentTab, action) => {
-  switch(action.type){
+  switch (action.type) {
     case types.SET_CURRENT_TAB:
       return action.index;
     default:
@@ -207,8 +207,8 @@ const currentTab = (state = initialState.currentTab, action) => {
   }
 }
 
-const currentOrder = (state= initialState.currentOrder, action) => {
-  switch(action.type) {
+const currentOrder = (state = initialState.currentOrder, action) => {
+  switch (action.type) {
     case types.SHOW_DELETE_DIALOG:
       return {
         ...state,
@@ -229,9 +229,9 @@ const currentOrder = (state= initialState.currentOrder, action) => {
     case types.POST_COMMENT_FAILURE:
       return initialState.currentOrder;
     case types.SET_COMMENT:
-      return {...state, comment:action.comment};
+      return { ...state, comment: action.comment };
     case types.SET_STARS:
-      return {...state, stars:action.stars};
+      return { ...state, stars: action.stars };
     default:
       return state;
   }
@@ -259,4 +259,16 @@ export const getOrders = state => {
 
 export const getDeletingOrderId = (state) => {
   return state.user.currentOrder && state.user.currentOrder.isDeleting ? state.user.currentOrder.id : null;
+}
+
+export const getCommentingOrderId = (state) => {
+  return state.user.currentOrder && state.user.currentOrder.isCommenting ? state.user.currentOrder.id : null;
+}
+
+export const getCurrentOrderComment = state => {
+  return state.user.currentOrder ? state.user.currentOrder.comment : '';
+}
+
+export const getCurrentOrderStars = state => {
+  return state.user.currentOrder ? state.user.currentOrder.stars : 0;
 }

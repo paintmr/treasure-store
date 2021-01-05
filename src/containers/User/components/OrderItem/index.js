@@ -3,7 +3,7 @@ import './style.css';
 
 class OrderItem extends Component {
   render() {
-    const {order: {title, statusText, orderPicUrl, channel, text, type}} = this.props;
+    const { order: { title, statusText, orderPicUrl, channel, text, type, commentId }, isCommenting } = this.props;
     return (
       <div className='orderItem'>
         <div className='orderItem__title'>
@@ -23,14 +23,14 @@ class OrderItem extends Component {
           <div className='orderItem__type'>{channel}</div>
           <div>
             {
-              type === 1? (
-                <div className='orderItem__btn'>Comment</div>
-              ): null
+              type === 1 && !commentId ? (
+                <div className='orderItem__btn' onClick={this.handleComment}>Comment</div>
+              ) : null
             }
             <div className='orderItem__btn' onClick={this.handleRemove}>Delete</div>
           </div>
         </div>
-        {this.renderCommentArea()}
+        {isCommenting ? this.renderCommentArea() : null}
       </div>
     );
   }
@@ -39,35 +39,40 @@ class OrderItem extends Component {
     this.props.onRemove()
   }
 
+  handleComment = () => {
+    const { order: { id } } = this.props;
+    this.props.onComment(id);
+  }
+
   renderCommentArea = () => {
     return (
       <div className='orderItem__commentContainer'>
-        <textarea className='orderItem__comment' onChange={this.handleCommentChange} value=''/>
+        <textarea className='orderItem__comment' onChange={this.handleCommentChange} value={this.props.comment} />
         {this.renderStars()}
-        <button className='orderItem__commentBtn' onClick={null}>Submit</button>
-        <button className='orderItem__commentBtn' onClick={null}>Cancel</button>
+        <button className='orderItem__commentBtn' onClick={this.props.onSubmitComment}>Submit</button>
+        <button className='orderItem__commentBtn' onClick={this.props.onCancelComment}>Cancel</button>
       </div>
     )
   }
 
-  handleCommentChange = () => {
-
-  }
-
   renderStars = () => {
+    const { stars } = this.props;
     return (
       <div>
         {
-          [1,2,3,4,5].map((item, index) => {
-            const lightClass = 3>= item ? 'orderItem__star--light' : ''
+          [1, 2, 3, 4, 5].map((item, index) => {
+            const lightClass = stars >= item ? 'orderItem__star--light' : ''
             return (
-              <span className={'orderItem__star ' + lightClass} key={index} onClick={null}>★</span>
+              <span className={'orderItem__star ' + lightClass} key={index} onClick={this.props.onStarsChange.bind(this, item)}>★</span>
             )
           })
         }
       </div>
     )
+  }
 
+  handleCommentChange = (e) => {
+    this.props.onCommentChange(e.target.value)
   }
 
 }
