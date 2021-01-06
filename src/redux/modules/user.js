@@ -117,7 +117,7 @@ export const actions = {
           dispatch(orderActions.addComment(id, commentObj.id));
           dispatch(commentActions.addComment(commentObj));
           resolve();
-        })
+        }, 1000)
       })
     }
   }

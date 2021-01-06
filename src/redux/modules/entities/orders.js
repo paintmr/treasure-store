@@ -40,8 +40,7 @@ const reducer = (state = {}, action) => {
         commentId: action.commentId
       }
     }
-  }
-  else {
+  } else {
     return normalReducer(state, action);
   }
 }

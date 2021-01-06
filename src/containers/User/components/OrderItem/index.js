@@ -24,7 +24,7 @@ class OrderItem extends Component {
           <div>
             {
               type === 1 && !commentId ? (
-                <div className='orderItem__btn' onClick={this.handleComment}>Comment</div>
+                <div className='orderItem__btn' onClick={this.props.onComment}>Comment</div>
               ) : null
             }
             <div className='orderItem__btn' onClick={this.handleRemove}>Delete</div>
@@ -37,11 +37,6 @@ class OrderItem extends Component {
 
   handleRemove = () => {
     this.props.onRemove()
-  }
-
-  handleComment = () => {
-    const { order: { id } } = this.props;
-    this.props.onComment(id);
   }
 
   renderCommentArea = () => {
