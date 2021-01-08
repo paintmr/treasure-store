@@ -11,8 +11,11 @@ export const REFUND_TYPE = 3;
 
 export const types = {
   DELETE_ORDER: 'ORDERS/DELETE_ORDER',
-  ADD_COMMENT: 'ORDERS/ADD_COMMENT'
+  ADD_COMMENT: 'ORDERS/ADD_COMMENT',
+  ADD_ORDER: 'ORDERS/ADD_ORDER'
 }
+
+let orderIdCounter = 10;
 
 export const actions = {
   deleteOrder: (orderId) => ({
@@ -23,7 +26,15 @@ export const actions = {
     type: types.ADD_COMMENT,
     orderId,
     commentId
-  })
+  }),
+  addOrder: order => {
+    const orderId = `o-${orderIdCounter++}`;
+    return {
+      type: types.ADD_ORDER,
+      orderId,
+      order: {...order, id: orderId}
+    }
+  }
 }
 
 const normalReducer = createReducer(schema.name)
@@ -40,7 +51,12 @@ const reducer = (state = {}, action) => {
         commentId: action.commentId
       }
     }
-  } else {
+  } else if (action.type === types.ADD_ORDER) {
+    return {
+      ...state,
+      [action.orderId]: action.order
+    }
+  }else {
     return normalReducer(state, action);
   }
 }
