@@ -20,9 +20,9 @@ export const actions = {
     type: types.SET_ORDER_QUANTITY,
     quantity
   }),
-  closeTip: () => {
+  closeTip: () => ({
     type: types.CLOSE_TIP
-  },
+  }),
   submitOrder: productId => {
     return (dispatch, getState) => {
       dispatch({type: types.SUBMIT_ORDER_REQUEST});//也可以把{type: types.SUBMIT_ORDER_REQUEST}封装到普通的action creator中
@@ -50,16 +50,29 @@ export const actions = {
 }
 
 const reducer = (state=initialState, action) => {
-  switch(action.types) {
+  switch(action.type) {
     case types.SET_ORDER_QUANTITY:
       return {...state, quantity: action.quantity}
-      case types.SUBMIT_ORDER_SUCCESS:
-        return {...state, showTip: true}
-      case types.CLOSE_TIP:
-        return {...state, showTip: false}
-      default:
-        return state;
+    case types.SUBMIT_ORDER_SUCCESS:
+      return {...state, showTip: true}
+    case types.CLOSE_TIP:
+      return {...state, showTip: false}
+    default:
+      return state;
   }
 }
 
 export default reducer;
+
+export const getQuantity = (state) => {
+  return state.purchase.quantity
+}
+
+export const getTipStatus = (state) => {
+  return state.purchase.showTip
+}
+
+//不让视图层的组件感知Redux中的entities，所以用purchase里的selector函数调用entities中的函数
+export const getProduct =  (state, id) => {
+  return getProductDetail(state, id)
+}
