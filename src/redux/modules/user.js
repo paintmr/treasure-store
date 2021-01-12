@@ -1,8 +1,12 @@
 import { combineReducers } from 'redux';
 import url from '../../utils/url';
 import { FETCH_DATA } from '../middleware/api';
-import { schema, PAID_TYPE, TO_BE_PAID_TYPE, REFUND_TYPE, getOrderById, actions as orderActions, types as orderTypes } from './entities/orders';
+import { schema, PAID_TYPE, TO_BE_PAID_TYPE, REFUND_TYPE, 
+    // getOrderById, 
+    getAllOrders,
+    actions as orderActions, types as orderTypes } from './entities/orders';
 import { actions as commentActions } from './entities/comments';
+import { createSelector } from 'reselect';
 
 const typeToKey = {
     [TO_BE_PAID_TYPE]: 'toBePaidIds',
@@ -269,12 +273,26 @@ export const getCurrentTab = state => {
     return state.user.currentTab
 }
 
-export const getOrders = state => {
-    const key = ['ids', 'toBePaidIds', 'paidIds', 'refundIds'][state.user.currentTab];
-    return state.user.orders[key].map(id => {
-        return getOrderById(state, id);
-    })
-}
+// export const getOrders = state => {
+//     const key = ['ids', 'toBePaidIds', 'paidIds', 'refundIds'][state.user.currentTab];
+//     return state.user.orders[key].map(id => {
+//         return getOrderById(state, id);
+//     })
+// }
+// 用reselect改造上面的函数：
+const getUserOrderIDs = state => state.user.orders;
+
+export const getOrders = createSelector(
+    [getCurrentTab, getUserOrderIDs, getAllOrders],
+    (tabIndex, userOrderIDs, orders) => {
+      const key = ['ids', 'toBePaidIds', 'paidIds', 'refundIds'][tabIndex];
+      const selectedOrderIds = userOrderIDs[key];
+      return selectedOrderIds.map(id => {
+        return orders[id];
+      })
+    }
+)
+
 
 export const getDeletingOrderId = (state) => {
     return state.user.currentOrder && state.user.currentOrder.isDeleting ? state.user.currentOrder.id : null;
