@@ -4,17 +4,29 @@ import { connect } from 'react-redux';
 
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
-import Home from '../Home';
-import productDetail from '../ProductDetail';
-import Search from '../Search';
-import SearchResult from '../SearchResult';
-import Login from '../Login';
+// 以前下列组件都是静态导入的，现在动态导入。
+// import Home from '../Home';
+// import ProductDetail from '../ProductDetail';
+// import Search from '../Search';
+// import SearchResult from '../SearchResult';
+// import Login from '../Login';
 import PrivateRoute from '../PrivateRoute';
-import User from '../User';
-import Purchase from '../Purchase';
+// import User from '../User';
+// import Purchase from '../Purchase';
 
 import { actions as appActions, getError } from '../../redux/modules/app';
 import ErrorToast from '../../components/ErrorToast';
+
+//通过AsyncComponent这个高阶组件和ES的新特性import来动态引入组件
+import AsyncComponent from '../../utils/AsyncComponent';
+
+const Home = AsyncComponent(() => import('../Home'));
+const ProductDetail = AsyncComponent(() => import('../ProductDetail'));
+const Search = AsyncComponent(() => import('../Search'));
+const SearchResult = AsyncComponent(() => import('../SearchResult'));
+const Login = AsyncComponent(() => import('../Login'));
+const User = AsyncComponent(() => import('../User'));
+const Purchase = AsyncComponent(() => import('../Purchase'));
 
 class App extends Component {
   render() {
@@ -24,7 +36,7 @@ class App extends Component {
         <Router>
           {/* 用switch，则匹配到第1个路由后，就停止匹配 */}
           <Switch>
-            <Route path='/detail/:id' component={productDetail} />
+            <Route path='/detail/:id' component={ProductDetail} />
             <Route path='/search' component={Search} />
             <Route path='/search_result' component={SearchResult} />
             <Route path='/login' component={Login} />
